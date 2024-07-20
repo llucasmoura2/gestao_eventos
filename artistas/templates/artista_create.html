@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="mb-0">Cadastrar Novo Artista</h1>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="{{ form.nome.id_for_label }}">Nome:</label>
+                        {{ form.nome }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.cpf.id_for_label }}">CPF:</label>
+                        {{ form.cpf }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.telefone.id_for_label }}">Telefone:</label>
+                        {{ form.telefone }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.banco.id_for_label }}">Banco:</label>
+                        {{ form.banco }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.tipo_chave_pix.id_for_label }}">Tipo Chave PIX:</label>
+                        {{ form.tipo_chave_pix }}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.chave_pix.id_for_label }}">Chave PIX:</label>
+                        {{ form.chave_pix }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a href="{% url 'artista_list' %}" class="btn btn-secondary">Voltar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
