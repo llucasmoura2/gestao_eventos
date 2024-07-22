@@ -3,59 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestão Dh</title>
+    <title>{% block title %}Gestão Dh{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .navbar-custom {
+            background-color: rgb(2, 130, 2); /* Verde escuro */
+        }
+        .footer-custom {
+            background-color: #f8f9fa;
+            padding: 1rem 0;
+        }
+        .container-custom {
+            max-width: 1140px;
+            margin: auto;
+        }
+        .welcome-banner {
             background-color: rgb(2, 130, 2);
+            color: white;
+            padding: 1rem;
+            border-radius: .25rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .event-card {
+            border: 1px solid rgb(2, 130, 2);
+            border-radius: .25rem;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+            margin-bottom: 1rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .event-card-header {
+            background-color: rgb(2, 130, 2);
+            color: white;
+            padding: .75rem 1.25rem;
+            border-radius: .25rem .25rem 0 0;
+        }
+        .event-card-body {
+            padding: 1.25rem;
+            flex: 1; /* Faz o corpo do cartão ocupar o máximo de espaço disponível */
+        }
+        .btn-custom {
+            background-color: rgb(2, 130, 2);
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: rgb(2, 130, 2);
+            color: white;
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <a class="navbar-brand text-white" href="{% url 'home' %}">Gestão Dh</a>
+    <nav class="navbar navbar-expand-lg navbar-custom navbar-dark">
+        <a class="navbar-brand" href="{% url 'home' %}">Gestão Dh</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'evento_list' %}">Lista de Eventos</a>
+                    <a class="nav-link" href="{% url 'evento_list' %}">Lista de Eventos</a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'artista_create' %}">Cadastrar Artista</a>
+                        <a class="nav-link" href="{% url 'artista_create' %}">Cadastrar Artista</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'artista_list' %}">Lista de Artistas</a>
+                        <a class="nav-link" href="{% url 'artista_list' %}">Lista de Artistas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'evento_create' %}">Criar Evento</a>
+                        <a class="nav-link" href="{% url 'evento_create' %}">Criar Evento</a>
                     </li>
                 {% endif %}
             </ul>
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'logout' %}">Logout</a>
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'login' %}">Login</a>
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{% url 'register' %}">Registrar</a>
+                        <a class="nav-link" href="{% url 'register' %}">Registrar</a>
                     </li>
                 {% endif %}
             </ul>
         </div>
     </nav>
 
-    <div class="container mt-4">
+    {% if show_proximos_eventos %}
+    <div class="container container-custom mt-4">
+        <div class="welcome-banner">
+            <h3>Bem-vindo ao Gestão Dh!</h3>
+            <p>Confira os eventos mais próximos abaixo.</p>
+        </div>
+    </div>
+
+    <div class="container container-custom mt-4">
+        <h2>Eventos Próximos</h2>
+        {% if eventos_proximos %}
+            <div class="row">
+                {% for evento in eventos_proximos %}
+                    <div class="col-md-4">
+                        <div class="event-card d-flex flex-column">
+                            <div class="event-card-header">
+                                <h5 class="mb-0">{{ evento.nome }}</h5>
+                            </div>
+                            <div class="event-card-body">
+                                <p><strong>Artista:</strong> {{ evento.artista.nome }}</p>
+                                <p><strong>Data:</strong> {{ evento.data }}</p>
+                                <p><strong>Hora:</strong> {{ evento.horario }}</p>
+                                <p><strong>Descrição:</strong> {{ evento.descricao }}</p>
+                                <a href="{% url 'evento_detail' evento.id %}" class="btn btn-custom">Detalhes</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Nenhum evento próximo encontrado.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <main class="container container-custom mt-4">
         {% block content %}
         {% endblock %}
-    </div>
+    </main>
+
+    <footer class="footer-custom text-center">
+        <div class="container">
+            <p class="mb-0">&copy; {{ current_year }} Gestão Dh. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

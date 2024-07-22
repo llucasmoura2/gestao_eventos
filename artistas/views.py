@@ -16,7 +16,8 @@ class ArtistaCreateView(CreateView):
     model = models.Artista
     template_name = 'artista_create.html'
     form_class = forms.ArtistaForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('artista_list')
+
 
 class ArtistaDetailView(DetailView):
     model = models.Artista
