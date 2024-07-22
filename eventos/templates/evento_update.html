@@ -1,1 +1,57 @@
 {% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white text-center">
+                    <h4>Atualizar Evento</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="{{ form.artista.id_for_label }}" class="font-weight-bold">Artista:</label>
+                            {{ form.artista }}
+                            <div class="text-danger">
+                                {{ form.artista.errors }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.data.id_for_label }}" class="font-weight-bold">Data:</label>
+                            {{ form.data }}
+                            <div class="text-danger">
+                                {{ form.data.errors }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.horario.id_for_label }}" class="font-weight-bold">Horário:</label>
+                            {{ form.horario }}
+                            <div class="text-danger">
+                                {{ form.horario.errors }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.descricao.id_for_label }}" class="font-weight-bold">Descrição:</label>
+                            {{ form.descricao }}
+                            <div class="text-danger">
+                                {{ form.descricao.errors }}
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <input type="submit" class="btn btn-success btn-block" value="Salvar Alterações">
+                        </div>
+                    </form>
+                    <a href="{% url 'evento_detail' evento.id %}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

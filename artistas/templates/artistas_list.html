@@ -1,1 +1,45 @@
 {% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2 class="mb-4">Lista de Artistas</h2>
+            <a href="{% url 'artista_create' %}" class="btn btn-success mb-3">Adicionar Novo Artista</a>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Telefone</th>
+                        <th>Banco</th>
+                        <th>Tipo de Chave PIX</th>
+                        <th>Chave PIX</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for artista in artistas %}
+                    <tr>
+                        <td>{{ artista.nome }}</td>
+                        <td>{{ artista.cpf }}</td>
+                        <td>{{ artista.telefone }}</td>
+                        <td>{{ artista.banco }}</td>
+                        <td>{{ artista.tipo_chave_pix }}</td>
+                        <td>{{ artista.chave_pix }}</td>
+                        <td>
+                            <a href="{% url 'artista_update' artista.id %}" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="{% url 'artista_delete' artista.id %}" class="btn btn-danger btn-sm">Excluir</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center">Nenhum artista cadastrado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
