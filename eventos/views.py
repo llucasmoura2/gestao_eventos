@@ -8,6 +8,7 @@ class EventoListView(ListView):
     model = models.Evento
     template_name = 'evento_list.html'
     context_object_name = 'eventos'
+    paginate_by = 6
 
 
 @method_decorator(login_required(login_url= 'login'), name = 'dispatch')

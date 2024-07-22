@@ -11,7 +11,7 @@ class Evento(models.Model):
 
 
     def __str__(self):
-        return self.artista
+        return self.artista.nome
 
     def formatted_data(self):
         return self.data.strftime('%d-%m-%Y')

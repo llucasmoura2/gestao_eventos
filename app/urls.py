@@ -2,25 +2,25 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
 from accounts.views import login_view, logout_view, register_view
+from django.views.generic import TemplateView
 from datetime import datetime
 from eventos.models import Evento
 
 
-def home(request):
-    current_year = datetime.now().year
-    proximos_eventos = Evento.objects.filter(data__gte=datetime.now()).order_by('data')[:5]
-    return render(request, 'base.html', {
-        'current_year': current_year,
-        'eventos_proximos': proximos_eventos,
-        'show_proximos_eventos': True,  # Adiciona a variável para controle condicional
-    })
+
+class HomeView(TemplateView):
+    template_name = 'base.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['eventos_proximos'] = Evento.objects.filter(data__gte=datetime.now()).order_by('data')
+        context['show_proximos_eventos'] = True
+        return context
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    path('home/', home, name='home'),
-
+    path('home/', HomeView.as_view(), name='home'),
     path('login/', login_view, name='login'),
     path('register/', register_view, name='register'),
     path('logout', logout_view, name='logout'),
