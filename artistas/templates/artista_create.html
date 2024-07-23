@@ -1,64 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container mt-4">
-        <div class="card">
-            <div class="card-header bg-success text-white">
-                <h1 class="mb-0">Cadastrar Novo Artista</h1>
-            </div>
-            <div class="card-body">                          
-                <form method="post" action="{% url 'artista_create' %}">
-                    {% csrf_token %}
-
-                    {% if form.errors %}
-                        <div class="alert alert-danger">
-                            <ul>
-                                {% for field in form %}
-                                    {% for error in field.errors %}
-                                        <li>{{ field.label }}: {{ error }}</li>
-                                    {% endfor %}
-                                {% endfor %}
-                                {% for error in form.non_field_errors %}
-                                    <li>{{ error }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    {% endif %}
-                    
-                    <div class="form-group">
-                        <label for="{{ form.nome.id_for_label }}">Nome:</label>
-                        {{ form.nome }}                        
-                    </div>
-
-                    <div class="form-group">
-                        <label for="{{ form.cpf.id_for_label }}">CPF:</label>
-                        {{ form.cpf }}                        
-                    </div>
-
-                    <div class="form-group">
-                        <label for="{{ form.telefone.id_for_label }}">Telefone:</label>
-                        {{ form.telefone }}                         
-                    </div>
-
-                    <div class="form-group">
-                        <label for="{{ form.banco.id_for_label }}">Banco:</label>
-                        {{ form.banco }}                         
-                    </div>
-
-                    <div class="form-group">
-                        <label for="{{ form.tipo_chave_pix.id_for_label }}">Tipo Chave PIX:</label>
-                        {{ form.tipo_chave_pix }}                         
-                    </div>
-
-                    <div class="form-group">
-                        <label for="{{ form.chave_pix.id_for_label }}">Chave PIX:</label>
-                        {{ form.chave_pix }}                         
-                    </div>
-
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Cadastrar Artista</h1>
+    <div class="card mx-auto" style="max-width: 600px;">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="id_nome" name="nome" maxlength="100" required>
+                </div>
+                <div class="mb-3">
+                    <label for="id_cpf" class="form-label">CPF</label>
+                    <input type="text" class="form-control" id="id_cpf" name="cpf" maxlength="14" required>
+                </div>
+                <div class="mb-3">
+                    <label for="id_telefone" class="form-label">Telefone</label>
+                    <input type="text" class="form-control" id="id_telefone" name="telefone" maxlength="15">
+                </div>
+                <div class="mb-3">
+                    <label for="id_banco" class="form-label">Banco</label>
+                    <input type="text" class="form-control" id="id_banco" name="banco" maxlength="100" required>
+                </div>
+                <div class="mb-3">
+                    <label for="id_tipo_chave_pix" class="form-label">Tipo Chave PIX</label>
+                    <select class="form-control" id="id_tipo_chave_pix" name="tipo_chave_pix">
+                        {% for value, label in form.tipo_chave_pix.field.choices %}
+                            <option value="{{ value }}" {% if value == form.tipo_chave_pix.value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="id_chave_pix" class="form-label">Chave PIX</label>
+                    <input type="text" class="form-control" id="id_chave_pix" name="chave_pix" maxlength="100" required>
+                </div>
+                <div class="text-center">
                     <button type="submit" class="btn btn-success">Salvar</button>
-                    <a href="{% url 'artista_list' %}" class="btn btn-secondary">Voltar</a>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 {% endblock %}
