@@ -9,6 +9,9 @@ class Evento(models.Model):
     horario = models.TimeField()
     descricao = models.TextField(null=True, blank=True)
 
+    class Meta:
+        ordering = ['data']
+
 
     def __str__(self):
         return self.artista.nome
