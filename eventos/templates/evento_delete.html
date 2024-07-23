@@ -1,27 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1 class="my-4">Excluir Evento</h1>
-    <div class="alert alert-info" role="alert">
-        <h4 class="alert-heading">Confirmação de Exclusão</h4>
-        <p>Você está prestes a excluir o evento:</p>
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Artista: {{ object.artista }}</h5>
-                <p class="card-text"><strong>Data:</strong> {{ object.data }}</p>
-                <p class="card-text"><strong>Horário:</strong> {{ object.horario }}</p>
-                <p class="card-text"><strong>Descrição:</strong> {{ object.descricao }}</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card border-0 shadow-lg rounded-lg overflow-hidden">
+                <div class="card-header bg-success text-white text-center py-4">
+                    <h4 class="m-0">Excluir Evento</h4>
+                </div>
+                <div class="card-body p-5 bg-light">
+                    <div class="alert custom-alert" role="alert">
+                        <h4 class="alert-heading">Confirmação de Exclusão</h4>
+                        <p>Você está prestes a excluir o evento:</p>
+                        <div class="card mb-3 border-light">
+                            <div class="card-body">
+                                <h5 class="card-title">Artista: {{ object.artista }}</h5>
+                                <p class="card-text"><strong>Data:</strong> {{ object.data }}</p>
+                                <p class="card-text"><strong>Horário:</strong> {{ object.horario }}</p>
+                                <p class="card-text"><strong>Descrição:</strong> {{ object.descricao }}</p>
+                            </div>
+                        </div>
+                        <p class="mb-0">Esta ação não pode ser desfeita. Por favor, confirme se deseja prosseguir.</p>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="submit" class="btn btn-danger btn-lg">Excluir</button>
+                            <a href="{% url 'evento_list' %}" class="btn btn-outline-success btn-lg">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-        <p class="mb-0">Esta ação não pode ser desfeita. Por favor, confirme se deseja prosseguir.</p>
     </div>
-    <form method="post">
-        {% csrf_token %}
-        <div class="d-flex justify-content-between mt-4">
-            <button type="submit" class="btn btn-danger">Excluir</button>
-            <a href="{% url 'evento_list' %}" class="btn btn-secondary">Cancelar</a>
-        </div>
-    </form>
 </div>
 {% endblock %}
