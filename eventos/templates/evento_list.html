@@ -41,8 +41,9 @@
                         {% endfor %}
                     </tbody>
                 </table>
-
+                {% if user.is_authenticated %}
                 <a href="{% url 'evento_create' %}" class="btn btn-primary mt-3">Adicionar Novo Evento</a>
+                {% endif %}
             </div>
         </div>
     </div>
