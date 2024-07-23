@@ -1,3 +1,4 @@
+#url principal
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
@@ -23,7 +24,8 @@ urlpatterns = [
     path('home/', HomeView.as_view(), name='home'),
     path('login/', login_view, name='login'),
     path('register/', register_view, name='register'),
-    path('logout', logout_view, name='logout'),
-    path('', include('eventos.urls')),
-    path('', include('artistas.urls'))
+    path('logout/', logout_view, name='logout'),
+    path('eventos/', include('eventos.urls')),
+    path('artistas/', include('artistas.urls')),
+    path('', HomeView.as_view(), name='home'), 
 ]
