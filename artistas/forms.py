@@ -11,7 +11,7 @@ class ArtistaForm(forms.ModelForm):
             'cpf': forms.TextInput(attrs={'class': 'form-control'}),
             'telefone': forms.TextInput(attrs={'class': 'form-control'}),
             'banco': forms.TextInput(attrs={'class': 'form-control'}),
-            'tipo_chave_pix': forms.TextInput(attrs={'class': 'form-control'}),
+            'tipo_chave_pix': forms.select(attrs={'class': 'form-control'}),
             'chave_pix': forms.TextInput(attrs={'class': 'form-control'}),
         }
         
