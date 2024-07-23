@@ -14,3 +14,12 @@ class ArtistaForm(forms.ModelForm):
             'tipo_chave_pix': forms.TextInput(attrs={'class': 'form-control'}),
             'chave_pix': forms.TextInput(attrs={'class': 'form-control'}),
         }
+        
+    
+    
+    def clean_cpf(self):
+        cpf = self.cleaned_data.get('cpf')
+        cpf_validator = CPF()
+        if not cpf_validator.validate(cpf):
+            raise forms.ValidationError('CPF inválido.')
+        return cpf

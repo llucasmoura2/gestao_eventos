@@ -1,3 +1,6 @@
+from django.contrib import messages
+from django.forms import BaseModelForm
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from . import models, forms
@@ -17,6 +20,15 @@ class ArtistaCreateView(CreateView):
     template_name = 'artista_create.html'
     form_class = forms.ArtistaForm
     success_url = reverse_lazy('artista_list')
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        return response
+    
+    def form_invalid(self, form):  
+        messages.error(self.request, 'Erro ao criar artista. Verifique os dados e tente novamente.')
+        return self.render_to_response(self.get_context_data(form=form))
+    
 
 
 class ArtistaDetailView(DetailView):
