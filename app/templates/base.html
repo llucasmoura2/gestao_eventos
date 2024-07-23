@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .navbar-custom {
-            background-color: rgb(2, 130, 2); /* Verde escuro */
+            background-color: rgb(2, 130, 2); 
         }
         .footer-custom {
             background-color: #f8f9fa;
@@ -26,30 +26,48 @@
             text-align: center;
         }
         .event-card {
-            border: 1px solid rgb(2, 130, 2);
-            border-radius: .25rem;
-            box-shadow: 0 0 10px rgba(0,0,0,.1);
+            background-color: rgb(240, 240, 240);
+            border: 1px solid rgba(2, 130, 2, 0.2);
+            border-radius: .5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,.1);
             margin-bottom: 1rem;
-            height: 100%;
+            transition: transform .2s, box-shadow .2s;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
+            height: 100%;
+        }
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,.2);
         }
         .event-card-header {
             background-color: rgb(2, 130, 2);
             color: white;
             padding: .75rem 1.25rem;
-            border-radius: .25rem .25rem 0 0;
+            font-size: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .event-card-body {
             padding: 1.25rem;
-            flex: 1; /* Faz o corpo do cartão ocupar o máximo de espaço disponível */
+            flex: 1;
+        }
+        .event-card-body p {
+            margin: .5rem 0;
+        }
+        .event-card-footer {
+            padding: .75rem 1.25rem;
+            background-color: rgb(240, 240, 240);
+            text-align: right;
         }
         .btn-custom {
             background-color: rgb(2, 130, 2);
             color: white;
         }
         .btn-custom:hover {
-            background-color: rgb(2, 130, 2);
+            background-color: rgb(2, 100, 2);
             color: white;
         }
     </style>
@@ -108,16 +126,18 @@
         {% if eventos_proximos %}
             <div class="row">
                 {% for evento in eventos_proximos %}
-                    <div class="col-md-4">
-                        <div class="event-card d-flex flex-column">
+                    <div class="col-md-4 d-flex align-items-stretch">
+                        <div class="event-card w-100">
                             <div class="event-card-header">
-                                <h5 class="mb-0">{{ evento.nome }}</h5>
+                                <span>{{ evento.nome }}</span>
+                                <span class="badge badge-light">{{ evento.data }}</span>
                             </div>
                             <div class="event-card-body">
                                 <p><strong>Artista:</strong> {{ evento.artista.nome }}</p>
-                                <p><strong>Data:</strong> {{ evento.data }}</p>
                                 <p><strong>Hora:</strong> {{ evento.horario }}</p>
                                 <p><strong>Descrição:</strong> {{ evento.descricao }}</p>
+                            </div>
+                            <div class="event-card-footer">
                                 <a href="{% url 'evento_detail' evento.id %}" class="btn btn-custom">Detalhes</a>
                             </div>
                         </div>
@@ -146,3 +166,4 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+ 
