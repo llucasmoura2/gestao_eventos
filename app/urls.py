@@ -1,4 +1,3 @@
-#url principal
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
@@ -6,7 +5,8 @@ from accounts.views import login_view, logout_view, register_view
 from django.views.generic import TemplateView
 from datetime import datetime
 from eventos.models import Evento
-
+from app.api_views import ScheduleMessageView
+from . import api_views
 
 
 class HomeView(TemplateView):
@@ -28,4 +28,5 @@ urlpatterns = [
     path('eventos/', include('eventos.urls')),
     path('artistas/', include('artistas.urls')),
     path('', HomeView.as_view(), name='home'), 
+    path('schedule_message/', api_views.ScheduleMessageView.as_view(), name='schedule_message'),
 ]
